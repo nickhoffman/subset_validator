@@ -6,7 +6,7 @@ class UserTest
   @@valid_permissions = %w(create retrieve update delete)
 
   attr_accessor :missing_in
-  validates     :missing_in, :subset => true
+  validates     :missing_in, :allow_blank => true, :subset => true
 
   def initialize(params = {})
     params.each {|k, v| send "#{k}=", v}
