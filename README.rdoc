@@ -23,7 +23,7 @@ Say you have a User model, and each user can have multiple roles, like this:
       end
     end
 You probably want your model to prevent arbitrary roles from being assigned. Eg:
-    the_boss = User.new %w(bonehead)
+    the_boss = User.new %w(admin manager bonehead)
 One solution is to write a custom setter method that checks if each element of the _roles_ array is contained in <i>@@valid_roles</i> . That's a pain in the ass, especially if you need to do it more than once.
 
 Enter SubsetValidator:
@@ -46,16 +46,16 @@ Enter SubsetValidator:
       end
     end
 That one validation takes care of it all for you:
-    the_boss = User.new %w(bonehead)
-     => #<User:0x9980a04 @roles=["bonehead"]>
+    the_boss = User.new %w(admin manager bonehead)
+     => #<User:0x91e4aac @roles=["admin", "manager", "bonehead"]>
 
     the_boss.valid?
      => false
     the_boss.errors
      => {:roles=>["contains an invalid value"]}
 
-    the_boss.roles = %w(manager)
-     => ["manager"]
+    the_boss.roles = %w(admin manager)
+     => ["admin", "manager"]
     the_boss.valid?
      => true
 
