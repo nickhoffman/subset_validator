@@ -11,18 +11,19 @@ require 'rake'
 
 require 'jeweler'
 Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "subset_validator"
-  gem.homepage = "http://github.com/nickhoffman/subset_validator"
-  gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
-  gem.email = "nick@deadorange.com"
-  gem.authors = ["Nick Hoffman"]
-  # Include your dependencies below. Runtime dependencies are required when using your gem,
-  # and development dependencies are only needed for development (ie running rake tasks, tests, etc)
-  #  gem.add_runtime_dependency 'jabber4r', '> 0.1'
-  #  gem.add_development_dependency 'rspec', '> 1.2.3'
+  gem.name        = "subset_validator"
+  gem.homepage    = "http://github.com/nickhoffman/subset_validator"
+  gem.license     = "MIT"
+  gem.summary     = %Q{An ActiveModel validation for checking if an attribute's values are a subset of another set.}
+  gem.description = %Q{An ActiveModel validation for checking if an attribute's values are a subset of another set.}
+  gem.email       = "nick@deadorange.com"
+  gem.authors     = ["Nick Hoffman"]
+
+  gem.add_dependency  'active_model', '~> 3.0.3'
+
+  gem.add_development_dependency "rspec",    "~> 2.1.0"
+  gem.add_development_dependency "bundler",  "~> 1.0.0"
+  gem.add_development_dependency "jeweler",  "~> 1.5.1"
 end
 Jeweler::RubygemsDotOrgTasks.new
 
