@@ -1,6 +1,68 @@
 = subset_validator
 
-Description goes here.
+
+== Description
+
+An ActiveModel validation for checking if an attribute's values are a subset of another set.
+
+In other words, check that an array is a subset of another array, a hash is a subset of another hash, etc.
+
+
+== Usage Example
+
+Say you have a User model, and each user can multiple roles, like this:
+    class User
+      attr_accessor :roles
+
+      @@valid_roles = %w(admin manager developer)
+
+      def initialize(roles)
+        raise ArgumentError, 'The roles must be an array.' unless roles.is_a? Array
+
+        @roles = roles
+      end
+    end
+You probably want your model to prevent arbitrary roles from being assigned. Eg:
+    the_boss = User.new %w(bonehead)
+One solution is to write a custom setter method that checks if each element of the _roles_ array is contained in <i>@@valid_roles</i> . That's a pain in the ass, especially if you need to do it more than once.
+
+Enter SubsetValidator:
+    require 'subset_validator'
+
+    class User
+      include ActiveModel::Validations
+
+      attr_accessor :roles
+
+      @@valid_roles = %w(admin manager developer)
+
+      validates :roles, :subset => {:in => @@valid_roles}
+
+      def initialize(roles)
+        raise ArgumentError, 'The roles must be an array.' unless roles.is_a? Array
+
+        @roles = roles
+      end
+    end
+That one validation takes care of it all for you:
+    the_boss = User.new %w(bonehead)
+     => #<User:0x9980a04 @roles=["bonehead"]>
+
+    the_boss.valid?
+     => false
+    the_boss.errors
+     => {:roles=>["contains an invalid value"]}
+
+    the_boss.roles = %w(manager)
+     => ["manager"]
+    the_boss.valid?
+     => true
+
+
+SubsetValidator works on more than just arrays, too. In fact, it'll work on anything, provided that:
+* the attribute's value can be anything that responds to <i>#each</i> ;
+* the set of valid values can be anything that responds to <i>#include?</i> .
+
 
 == Contributing to subset_validator
  
@@ -9,11 +71,10 @@ Description goes here.
 * Fork the project
 * Start a feature/bugfix branch
 * Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+* Make sure to add RSpec specs for it. This is important so I don't break it in a future version unintentionally.
+* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate that to its own commit so I can cherry-pick around it.
 
 == Copyright
 
-Copyright (c) 2010 Nick Hoffman. See LICENSE.txt for
-further details.
+Copyright (c) 2010 Nick Hoffman. See LICENSE.txt for further details.
 
