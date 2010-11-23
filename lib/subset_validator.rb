@@ -1,5 +1,5 @@
 class SubsetValidator < ActiveModel::EachValidator
-  @@error_message = 'contains an invalid item'
+  @@error_message = 'contains an invalid value'
 
   def validate_each(record, attribute, value)
     unless options[:in].respond_to? :include?
