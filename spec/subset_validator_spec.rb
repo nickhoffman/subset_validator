@@ -9,7 +9,10 @@ class UserTest
   validates     :missing_in, :allow_blank => true, :subset => true
 
   attr_accessor :doesnt_respond_to_each
-  validates     :doesnt_respond_to_each, :allow_blank => true, :subset => {:in => @@valid_values}
+  validates     :doesnt_respond_to_each,  :allow_blank => true, :subset => {:in => @@valid_values}
+
+  attr_accessor :contains_invalid_value
+  validates     :contains_invalid_value,  :allow_blank => true, :subset => {:in => @@valid_values}
 
   def initialize(params = {})
     params.each {|k, v| send "#{k}=", v}
@@ -43,6 +46,16 @@ describe SubsetValidator do
           ArgumentError,
           'The attribute being validated must respond to #each'
         )
+      end
+    end
+
+    describe 'when the attribute contains an invalid value' do
+      it 'adds an error on the attribute' do
+        u = UserTest.new :contains_invalid_value => %w(asdf)
+        u.valid?
+
+        u.errors[:contains_invalid_value].count.should equal 1
+        u.errors[:contains_invalid_value].first.should == 'contains an invalid value'
       end
     end
   end
