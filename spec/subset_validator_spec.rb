@@ -3,13 +3,13 @@ require File.expand_path(File.dirname(__FILE__) + '/spec_helper')
 class UserTest
   include ActiveModel::Validations
 
-  @@valid_permissions = %w(create retrieve update delete)
+  @@valid_values = %w(echidna wombat tuatara)
 
   attr_accessor :missing_in
   validates     :missing_in, :allow_blank => true, :subset => true
 
   attr_accessor :doesnt_respond_to_each
-  validates     :doesnt_respond_to_each, :allow_blank => true, :subset => {:in => @@valid_permissions}
+  validates     :doesnt_respond_to_each, :allow_blank => true, :subset => {:in => @@valid_values}
 
   def initialize(params = {})
     params.each {|k, v| send "#{k}=", v}
