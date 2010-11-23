@@ -27,6 +27,7 @@ You probably want your model to prevent arbitrary roles from being assigned. Eg:
 One solution is to write a custom setter method that checks if each element of the _roles_ array is contained in <i>@@valid_roles</i> . That's a pain in the ass, especially if you need to do it more than once.
 
 Enter SubsetValidator:
+    require 'active_model'
     require 'subset_validator'
 
     class User
