@@ -18,12 +18,6 @@ Jeweler::Tasks.new do |gem|
   gem.description = %Q{An ActiveModel validation for checking if an attribute's values are a subset of another set.}
   gem.email       = "nick@deadorange.com"
   gem.authors     = ["Nick Hoffman"]
-
-  gem.add_dependency  'activemodel', '~> 3.0.3'
-
-  gem.add_development_dependency "rspec",    "~> 2.1.0"
-  gem.add_development_dependency "bundler",  "~> 1.0.0"
-  gem.add_development_dependency "jeweler",  "~> 1.5.1"
 end
 Jeweler::RubygemsDotOrgTasks.new
 
