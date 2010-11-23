@@ -5,5 +5,9 @@ class SubsetValidator < ActiveModel::EachValidator
     unless options[:in].respond_to? :include?
       raise ArgumentError, 'An object with the method include? must be supplied as the :in option of the configuration hash'
     end
+
+    unless value.respond_to? :each
+      raise ArgumentError, 'The attribute being validated must respond to #each'
+    end
   end
 end
