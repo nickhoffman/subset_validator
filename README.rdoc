@@ -10,7 +10,7 @@ In other words, check that an array is a subset of another array, a hash is a su
 
 == Usage Example
 
-Say you have a User model, and each user can multiple roles, like this:
+Say you have a User model, and each user can have multiple roles, like this:
     class User
       attr_accessor :roles
 
