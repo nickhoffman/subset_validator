@@ -12,7 +12,14 @@ class UserTest
   validates     :doesnt_respond_to_each,  :allow_blank => true, :subset => {:in => @@valid_values}
 
   attr_accessor :contains_invalid_value
-  validates     :contains_invalid_value,  :allow_blank => true, :subset => {:in => @@valid_values}
+  validates     :contains_invalid_value,
+    :allow_blank  => true,
+    :subset       => {:in => @@valid_values}
+
+  attr_accessor :custom_error_message
+  validates     :custom_error_message,
+    :allow_blank  => true,
+    :subset       => {:in => @@valid_values, :message => 'a custom error message'}
 
   def initialize(params = {})
     params.each {|k, v| send "#{k}=", v}
@@ -56,6 +63,15 @@ describe SubsetValidator do
 
         u.errors[:contains_invalid_value].count.should equal 1
         u.errors[:contains_invalid_value].first.should == 'contains an invalid value'
+      end
+
+      describe 'when a custom error message is given' do
+        it 'uses the custom error message' do
+          u = UserTest.new :custom_error_message => %w(foobar)
+          u.valid?
+
+          u.errors[:custom_error_message].first.should == 'a custom error message'
+        end
       end
     end
   end

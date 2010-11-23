@@ -10,9 +10,11 @@ class SubsetValidator < ActiveModel::EachValidator
       raise ArgumentError, 'The attribute being validated must respond to #each'
     end
 
+    error_message = options[:message] || @@error_message
+
     value.each do |element|
       unless options[:in].include? element
-        record.errors.add attribute, @@error_message
+        record.errors.add attribute, error_message
         break
       end
     end
