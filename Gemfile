@@ -1,6 +1,6 @@
 source "http://rubygems.org"
 
-gem 'activemodel', '~> 3.0.3', :require => 'active_model'
+gem 'activemodel', '>= 3.0.3', :require => 'active_model'
 
 group :development do
   gem 'rspec',    '2.8.0'
