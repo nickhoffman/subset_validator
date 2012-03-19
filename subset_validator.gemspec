@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Nick Hoffman"]
-  s.date = "2012-03-18"
+  s.date = "2012-03-19"
   s.description = "An ActiveModel validation for checking if an attribute's values are a subset of another set."
   s.email = "nick@deadorange.com"
   s.extra_rdoc_files = [
